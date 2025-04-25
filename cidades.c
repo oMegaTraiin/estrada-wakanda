@@ -104,7 +104,7 @@ double calcularMenorVizinhanca(const char *nomeArquivo) {
         } else {
             double anterior = (estrada->C[i].Posicao + estrada->C[i - 1].Posicao) / 2.0;
             double proxima = (estrada->C[i].Posicao + estrada->C[i + 1].Posicao) / 2.0;
-            vizinhanca = proxima - anterior;
+            vizinhanca = proxima > anterior ? proxima - anterior : anterior - proxima;
         }
 
         if (vizinhanca < menor) menor = vizinhanca;
@@ -135,7 +135,7 @@ char *cidadeMenorVizinhanca(const char *nomeArquivo) {
         } else {
             double anterior = (estrada->C[i].Posicao + estrada->C[i - 1].Posicao) / 2.0;
             double proxima = (estrada->C[i].Posicao + estrada->C[i + 1].Posicao) / 2.0;
-            vizinhanca = proxima - anterior;
+            vizinhanca = proxima > anterior ? proxima - anterior : anterior - proxima;
         }
 
         if (vizinhanca < menor) {
@@ -146,11 +146,9 @@ char *cidadeMenorVizinhanca(const char *nomeArquivo) {
 
     if (indice == -1) return NULL;
 
-    // Retornar cópia do nome
+    // Retornar cópia do nome;
     char *nomeCidade = malloc(strlen(estrada->C[indice].Nome) + 1);
-    if (nomeCidade) {
-        strcpy(nomeCidade, estrada->C[indice].Nome);
-    }
+    if (nomeCidade) strcpy(nomeCidade, estrada->C[indice].Nome);
 
     free(estrada->C);
     free(estrada);
@@ -192,4 +190,3 @@ void quickSort(Cidade *V, int inf, int sup) {
         quickSort(V, p, sup);
     }
 }
-
